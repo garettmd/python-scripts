@@ -1,13 +1,12 @@
-import re, pyperclip
+import re
 
 lengthTest = re.compile(r'(\S{8,})')
 digitTest = re.compile(r'(\d+)')
 upTest = re.compile(r'[A-Z]')
 loTest = re.compile(r'[a-z]')
 
-# text = str(pyperclip.paste())
-text = 'Hellothere1987!'
-# text = 'hellothere87'
+text = 'Password1'
+# text = 'Password'
 # text = 'password'
 # text = 'pass'
 output = ''
