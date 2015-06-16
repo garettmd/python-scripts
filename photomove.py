@@ -61,10 +61,9 @@ def main():
             try:
                 date = datetime.strptime(
                     str(piexif.load(filename)["Exif"][36867]).strip('b\''), '%Y:%m:%d %H:%M:%S')
-            except Exception, e:
+            except:
                 logger.error("Could not extract EXIF data from %s" %
                              filename, exc_info=True)
-                raise e
             else:
                 year = date.strftime("%Y")
                 month = date.strftime("%m")
