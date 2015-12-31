@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import shutil
 import sys
 import piexif
@@ -15,6 +15,7 @@ __author__ = "garettmd@gmail.com"
 DESTDIR = '/home/garettmd/Pictures/'
 SRCDIR = '/home/garettmd/Pictures/Mobile/'
 DESCRIPTION = 'Move photos from source directory to destination directory'
+EXIFERRORDIR = 'shutil.move(srcdir + filename, EXIFERRORDIR)'
 
 ##############################
 # Configure logging parameters
@@ -27,6 +28,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 ##############################
 
+#####################
 # Configure argparser
 parser = argparse.ArgumentParser(description=DESCRIPTION)
 parser.add_argument('-s', '--source', help='source directory', required=True)
@@ -35,6 +37,7 @@ parser.add_argument(
 args = parser.parse_args()
 srcdir = args.source
 destdir = args.destination
+#####################
 
 
 def move(src, dest):
@@ -64,6 +67,7 @@ def main():
             except:
                 logger.error("Could not extract EXIF data from %s" %
                              filename, exc_info=True)
+		shutil.move(srcdir + filename, EXIFERRORDIR)
             else:
                 year = date.strftime("%Y")
                 month = date.strftime("%m")
