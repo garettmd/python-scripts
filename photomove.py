@@ -8,6 +8,7 @@ import argparse
 from os import path, makedirs, listdir
 from mimetypes import guess_type
 from datetime import datetime
+from gi.repository.GExiv2 import Metadata
 
 __name__ = "__main__"
 __author__ = "garettmd@gmail.com"
@@ -59,7 +60,8 @@ def main():
     dirs = srcdir
     for filename in listdir(dirs):
         logger.debug('File: %s \t Type: %s' % (filename, guess_type(filename)))
-        if guess_type(filename)[0] == "image/jpeg":
+        data = Metadata(filename)
+        if data.get_mime_type() == 'image/jpeg':
             # Get EXIF data from image
             try:
                 date = datetime.strptime(
@@ -67,7 +69,7 @@ def main():
             except:
                 logger.error("Could not extract EXIF data from %s" %
                              filename, exc_info=True)
-		shutil.move(srcdir + filename, EXIFERRORDIR)
+                shutil.move(srcdir + filename, EXIFERRORDIR)
             else:
                 year = date.strftime("%Y")
                 month = date.strftime("%m")
@@ -75,6 +77,7 @@ def main():
                 filepath = "%s%s-%s(%s)/" % (destdir, year, month, shortmonth)
                 move(srcdir + filename, filepath)
         else:
-            logger.info('File: %s not supported.' % filename)
+            filetype = data.get_mime_type()
+            logger.info('File: %s of type %s not supported.' % filename,filetype)
 
 main()
