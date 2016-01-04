@@ -60,23 +60,24 @@ def main():
     dirs = srcdir
     for filename in listdir(dirs):
         logger.debug('File: %s \t Type: %s' % (filename, guess_type(filename)))
-        data = Metadata(filename)
-        if data.get_mime_type() == 'image/jpeg':
+        try:
+            data = Metadata(filename)
+        except:
+            logger.error("%s: Filetype not supported" % filename, exc_info=True)
+            shutil.move(srcdir + filename, EXIFERRORDIR)
+        else:
             # Get EXIF data from image
             try:
-                date = data.get_date_time()
+                data.get_date_time()
             except:
-                logger.error("Could not extract EXIF data from %s" %
-                             filename, exc_info=True)
-                shutil.move(srcdir + filename, EXIFERRORDIR)
+                logger.error("%s: No date-time specified in file. Leaving in current directory" %
+                    filename, exc_info=True)
             else:
                 year = date.strftime("%Y")
                 month = date.strftime("%m")
                 shortmonth = date.strftime("%b")
                 filepath = "%s%s-%s(%s)/" % (destdir, year, month, shortmonth)
                 move(srcdir + filename, filepath)
-        else:
-            filetype = data.get_mime_type()
-            logger.info('File: %s of type %s not supported.' % filename,filetype)
+
 
 main()
