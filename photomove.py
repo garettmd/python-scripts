@@ -64,8 +64,7 @@ def main():
         if data.get_mime_type() == 'image/jpeg':
             # Get EXIF data from image
             try:
-                date = datetime.strptime(
-                    str(piexif.load(filename)["Exif"][36867]).strip('b\''), '%Y:%m:%d %H:%M:%S')
+                date = data.get_date_time()
             except:
                 logger.error("Could not extract EXIF data from %s" %
                              filename, exc_info=True)
