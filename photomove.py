@@ -16,7 +16,7 @@ __author__ = "garettmd@gmail.com"
 DESTDIR = '/home/garettmd/Pictures/'
 SRCDIR = '/home/garettmd/Pictures/Mobile/'
 DESCRIPTION = 'Move photos from source directory to destination directory'
-EXIFERRORDIR = 'shutil.move(srcdir + filename, EXIFERRORDIR)'
+EXIFERRORDIR = '/home/ubuntu/errors/'
 
 ##############################
 # Configure logging parameters
@@ -61,10 +61,10 @@ def main():
     for filename in listdir(dirs):
         logger.debug('File: %s \t Type: %s' % (filename, guess_type(filename)))
         try:
-            data = Metadata(filename)
+            data = Metadata(srcdir + filename)
         except:
             logger.error("%s: Filetype not supported" % filename, exc_info=True)
-            shutil.move(srcdir + filename, EXIFERRORDIR)
+	move(srcdir + filename, EXIFERRORDIR)
         else:
             # Get EXIF data from image
             try:
