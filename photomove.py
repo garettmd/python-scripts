@@ -64,7 +64,7 @@ def main():
             data = Metadata(srcdir + filename)
         except:
             logger.error("%s: Filetype not supported" % filename, exc_info=True)
-	move(srcdir + filename, EXIFERRORDIR)
+            move(srcdir + filename, EXIFERRORDIR)
         else:
             # Get EXIF data from image
             try:
