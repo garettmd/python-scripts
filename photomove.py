@@ -59,7 +59,7 @@ def main():
     logger.info('\n\nStarting main function')
     dirs = srcdir
     for filename in listdir(dirs):
-        logger.debug('File: %s \t Type: %s' % (filename, guess_type(filename)))
+        logger.debug('\nFile: %s \t Type: %s' % (filename, guess_type(filename)))
         try:
             data = Metadata(srcdir + filename)
         except:
