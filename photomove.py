@@ -68,7 +68,7 @@ def main():
         else:
             # Get EXIF data from image
             try:
-                data.get_date_time()
+                date = data.get_date_time()
             except:
                 logger.error("%s: No date-time specified in file. Leaving in current directory" %
                     filename, exc_info=True)
