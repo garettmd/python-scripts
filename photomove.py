@@ -77,4 +77,5 @@ def main():
         else:
             logger.info('File: %s not supported.' % filename)
 
-main()
+if __name__ = '__main__':
+    main()
